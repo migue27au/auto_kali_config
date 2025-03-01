@@ -49,33 +49,48 @@ log "+" "Users: $users"
 
 
 # ADDING SPOTIFY DEBIAN REPOSITORY
-log "+" "Adding Spotify repository"
-curl -sS https://download.spotify.com/debian/pubkey_C85668DF69375001.gpg | gpg --dearmor --yes -o /etc/apt/trusted.gpg.d/spotify.gpg
-echo "deb http://repository.spotify.com stable non-free" | tee /etc/apt/sources.list.d/spotify.list
-
+if ! grep -q "spotify.com" /etc/apt/sources.list.d/spotify.list; then
+    log "+" "Adding Spotify repository"
+    curl -sS https://download.spotify.com/debian/pubkey_C85668DF69375001.gpg | gpg --dearmor --yes -o /etc/apt/trusted.gpg.d/spotify.gpg
+    echo "deb http://repository.spotify.com stable non-free" | tee /etc/apt/sources.list.d/spotify.list
+else
+    log "+" "Spotify repository already added."
+fi
 
 # ADDING SUBLIME DEBIAN REPOSITORY
-log "+" "Adding Sublime text repository"
-wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | gpg --dearmor | tee /etc/apt/trusted.gpg.d/sublimehq-archive.gpg > /dev/null
-echo "deb https://download.sublimetext.com/ apt/stable/" | tee /etc/apt/sources.list.d/sublime-text.list
+if ! grep -q "sublimetext.com" /etc/apt/sources.list.d/sublime-text.list; then
+    log "+" "Adding Sublime text repository"
+    wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | gpg --dearmor | tee /etc/apt/trusted.gpg.d/sublimehq-archive.gpg > /dev/null
+    echo "deb https://download.sublimetext.com/ apt/stable/" | tee /etc/apt/sources.list.d/sublime-text.list
+else
+    log "+" "Sublime text repository already added."
+fi
 
 # ADDING CHROME DEBIAN REPOSITORY
-log "+" "Adding Chrome repository"
-wget -qO - https://dl-ssl.google.com/linux/linux_signing_key.pub | gpg --dearmor | tee /etc/apt/trusted.gpg.d/google-chrome.gpg > /dev/null
-sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
+if ! grep -q "google.com/linux/chrome" /etc/apt/sources.list.d/google-chrome.list; then
+    log "+" "Adding Chrome repository"
+    wget -qO - https://dl-ssl.google.com/linux/linux_signing_key.pub | gpg --dearmor | tee /etc/apt/trusted.gpg.d/google-chrome.gpg > /dev/null
+    sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
+else
+    log "+" "Chrome repository already added."
+fi
 
 # ADDING BRAVE DEBIAN REPOSITORY
-log "+" "Adding Brave browser repository"
-curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
-echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main" | tee /etc/apt/sources.list.d/brave-browser-release.list
+if ! grep -q "brave-browser-apt-release.s3.brave.com" /etc/apt/sources.list.d/brave-browser-release.list; then
+    log "+" "Adding Brave browser repository"
+    curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
+    echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main" | tee /etc/apt/sources.list.d/brave-browser-release.list
+else
+    log "+" "Brave browser repository already added."
+fi
+
 
 log "+" "Update repository"
 apt update
 
+# INSTALING LINUX ESSENTIAL AND LINUX  HEADERS
 log "+" "Installing build-essential and linux-headers"
 apt install build-essential linux-headers-$(uname -r) -y
-
-# INSTALING LINUX ESSENTIAL AND LINUX  HEADERS
 
 # Array de paquetes a instalar
 packages=(
@@ -123,14 +138,12 @@ packages=(
     "seclists"
 )
 
+i=0
 while [ $i -lt ${#packages[@]} ]; do
     package=${packages[$i]}
     log "+" "Installing $package"
-
-    # Intentar instalar el paquete
     apt install -y $package
 
-    # Comprobar si ocurrió un error
     if [ $? -ne 0 ]; then
         log "-" "Error installing $package. Trying apt install --fix-missing to solve it"
         apt install -y
