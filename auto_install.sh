@@ -178,7 +178,7 @@ log "+" "Downloading oh-my-zsh"
 wget -N -O "$TEMP_FOLDER/install-ohmyzsh.sh" https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
 
 log "+" "Installing ohmyzsh"
-sh "$TEMP_FOLDER/install-ohmyzsh.sh" --unattended
+sudo -u root sh "$TEMP_FOLDER/install-ohmyzsh.sh" --unattended
 
 log "+" "Downloading custom oh-my-zsh themes"
 wget -N -P $TEMP_FOLDER "$AUTO_KALI_CONFIG_REPO/root-theme.zsh-theme"
@@ -198,6 +198,8 @@ for user in "${users[@]}"; do
 
     log "+" "Adding $user to group users"
     usermod -aG "users" "$user"
+    log "+" "Installing ohmyzsh"
+    sudo -u "$user" sh "$TEMP_FOLDER/install-ohmyzsh.sh" --unattended
 
     #Copying ohmyzsh files into users dir
     log "+" "Copying ohmyzsh files into /home/$user"
