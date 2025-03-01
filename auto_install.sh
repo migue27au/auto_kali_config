@@ -228,7 +228,7 @@ for user_configurated in "${users[@]}"; do
     echo "TerminalEmulator=xfce4-terminal" >> "/home/$user_configurated/.config/xfce4/helpers.rc"
     
     log "+" "Setting default browser to brave-browser"
-    update-alternatives --set x-www-browser /usr/bin/brave-browser
+    update-alternatives --set x-www-browser /usr/bin/brave-browser-stable
     echo "WebBrowser=brave-browser" >> "/home/$user_configurated/.config/xfce4/helpers.rc"
 
     log "+" "Creating tools folder"
