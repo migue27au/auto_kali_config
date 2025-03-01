@@ -178,7 +178,7 @@ log "+" "Downloading oh-my-zsh"
 wget -N -O "$TEMP_FOLDER/install-ohmyzsh.sh" https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
 
 log "+" "Installing ohmyzsh"
-sudo -u root sh "$TEMP_FOLDER/install-ohmyzsh.sh" --unattended
+sh "$TEMP_FOLDER/install-ohmyzsh.sh" --unattended
 
 log "+" "Downloading custom oh-my-zsh themes"
 wget -N -P $TEMP_FOLDER "$AUTO_KALI_CONFIG_REPO/root-theme.zsh-theme"
