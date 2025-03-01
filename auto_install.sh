@@ -189,6 +189,8 @@ wget -N -P $TEMP_FOLDER $AUTO_KALI_CONFIG_REPO/cherrytree_config.cfg
 
 log "+" "Copying root-custom-theme into ohmyzsh custom themes folder"
 cp "$TEMP_FOLDER/root-theme.zsh-theme" "/root/.oh-my-zsh/custom/themes/my-custom-theme.zsh-theme"
+sed -i 's/^ZSH_THEME="robbyrussell"/ZSH_THEME="my-custom-theme"/' ~/.zshrc
+
 
 log "+" "Creating users group"
 groupadd "users"
@@ -198,8 +200,11 @@ for user in "${users[@]}"; do
 
     log "+" "Adding $user to group users"
     usermod -aG "users" "$user"
+
+    #Installing oh-my-zsh
     log "+" "Installing ohmyzsh"
     sudo -u "$user" sh "$TEMP_FOLDER/install-ohmyzsh.sh" --unattended
+    sed -i 's/^ZSH_THEME="robbyrussell"/ZSH_THEME="my-custom-theme"/' "/home/$user/.zshrc"
 
     #Copying ohmyzsh files into users dir
     log "+" "Copying ohmyzsh files into /home/$user"
