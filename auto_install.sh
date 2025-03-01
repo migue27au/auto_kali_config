@@ -101,6 +101,7 @@ apt update
 # Usar la variable DEBIAN_FRONTEND=noninteractive para evitar preguntas durante la instalación
 log "+" "Setting DEBIAN_FRONTEND noninteractive"
 export DEBIAN_FRONTEND=noninteractive
+export NEEDRESTART_MODE=a
 
 # INSTALING LINUX ESSENTIAL AND LINUX  HEADERS
 log "+" "Installing build-essential and linux-headers"
