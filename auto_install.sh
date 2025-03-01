@@ -73,7 +73,7 @@ log "+" "Update repository"
 apt update
 
 log "!" "Upgrade all packages"
-apt upgrade -y
+apt upgrade
 
 log "+" "Update repository"
 apt update
@@ -130,14 +130,25 @@ packages=(
     "seclists"
 )
 
-# Instalar cada paquete en el array
-i=0
 while [ $i -lt ${#packages[@]} ]; do
     package=${packages[$i]}
     log "+" "Installing $package"
+
+    # Intentar instalar el paquete
     apt install -y $package
+
+    # Comprobar si ocurrió un error
+    if [ $? -ne 0 ]; then
+        log "-" "Error installing $package. Trying apt install --fix-missing to solve it"
+        apt install -y
+        apt install --fix-missing -y
+
+        apt install -y $package
+    fi
+
     ((i++))
 done
+
 
 log "+" "Downlading xfce4 panel configuration"
 wget -P $TEMP_FOLDER "$AUTO_KALI_CONFIG_REPO/xfce4-panel.xml"
@@ -163,7 +174,9 @@ log "+" "Creating users group"
 groupadd "users"
 
 for user in "${users[@]}"; do
-    log "Adding $user to users group"
+    log "+" "Configurin user $user"
+
+    log "+" "Adding $user to users group"
     usermod -aG "users" "$user"
 
     #Copying ohmyzsh files into users dir
@@ -260,12 +273,10 @@ make accessrights
 make clean && make -j
 make install
 
-
 log "!" "Enabling bluetooth service"
 systemctl enable bluetooth
 
-log "!" "Reboot your system now"
-
-
 log "!" "Upgrade all packages"
 apt update && apt upgrade -y
+
+log "!" "Reboot your system now"
