@@ -230,9 +230,10 @@ for user in "${users[@]}"; do
 
     log "+" "Setting default terminal to xfce4-terminal"
     echo "" > "/home/$user/.config/xfce4/helpers.rc"
-    sudo -u "$user" echo "TerminalEmulator=xfce4-terminal" >> "/home/$user/.config/xfce4/helpers.rc"
+    echo "TerminalEmulator=xfce4-terminal" >> "/home/$user/.config/xfce4/helpers.rc"
     update-alternatives --set x-terminal-emulator /usr/bin/xfce4-terminal.wrapper
-    sudo -u "$user" log "+" "Setting default browser to brave-browser"
+    
+    log "+" "Setting default browser to brave-browser"
     echo "WebBrowser=brave-browser" >> "/home/$user/.config/xfce4/helpers.rc"
 
     log "+" "Creating tools folder"
@@ -264,8 +265,10 @@ for user in "${users[@]}"; do
 
     log "+" "Configuring xfce4-panel"
     mv "/home/$user/.config/xfce4/panel" "/tmp/$user_xfce4_panel"
-    sudo -u "$user" unzip "$TEMP_FOLDER/xfce4-panel.zip" -d "/home/$user/.config/xfce4/"
-    sudo -u "$user" cp "$TEMP_FOLDER/xfce4-panel.xml" -d "/home/$user/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml"
+    unzip "$TEMP_FOLDER/xfce4-panel.zip" -d "/home/$user/.config/xfce4/"
+    cp "$TEMP_FOLDER/xfce4-panel.xml" -d "/home/$user/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml"
+    chown -R $user:$user "/home/$user/.config/xfce4/"
+    
     sudo -u "$user" xfconf-query -c xfce4-panel -p /plugins/plugin-4/base-directory -s "/home/$user"
 
     log "+" "Downloading frida & objection"
