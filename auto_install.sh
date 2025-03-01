@@ -177,20 +177,12 @@ wget -N -P $TEMP_FOLDER "https://github.com/migue27au/auto_kali_config/raw/main/
 log "+" "Downloading oh-my-zsh"
 wget -N -O "$TEMP_FOLDER/install-ohmyzsh.sh" https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
 
-log "+" "Installing ohmyzsh"
-sh "$TEMP_FOLDER/install-ohmyzsh.sh" --unattended
-
 log "+" "Downloading custom oh-my-zsh themes"
 wget -N -P $TEMP_FOLDER "$AUTO_KALI_CONFIG_REPO/root-theme.zsh-theme"
 wget -N -P $TEMP_FOLDER "$AUTO_KALI_CONFIG_REPO/user-theme.zsh-theme"
 
 log "+"  "Downloading custom cherrytree config"
 wget -N -P $TEMP_FOLDER $AUTO_KALI_CONFIG_REPO/cherrytree_config.cfg
-
-log "+" "Copying root-custom-theme into ohmyzsh custom themes folder"
-cp "$TEMP_FOLDER/root-theme.zsh-theme" "/root/.oh-my-zsh/custom/themes/my-custom-theme.zsh-theme"
-sed -i 's/^ZSH_THEME="robbyrussell"/ZSH_THEME="my-custom-theme"/' ~/.zshrc
-
 
 log "+" "Creating users group"
 groupadd "users"
@@ -287,6 +279,13 @@ for user in "${users[@]}"; do
 
 
 done
+
+log "+" "Installing ohmyzsh in root"
+cp -r "/home/$user/.oh-my-zsh" /root/
+
+log "+" "Copying root-custom-theme into ohmyzsh custom themes folder"
+cp "$TEMP_FOLDER/root-theme.zsh-theme" "/root/.oh-my-zsh/custom/themes/my-custom-theme.zsh-theme"
+sed -i 's/^ZSH_THEME="robbyrussell"/ZSH_THEME="my-custom-theme"/' /root/.zshrc
 
 log "+" "Extracting rockyou"
 gunzip /usr/share/wordlists/rockyou.txt.gz
