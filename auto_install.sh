@@ -231,10 +231,10 @@ for user in "${users[@]}"; do
     sudo -u "$user" xfconf-query -c xfce4-keyboard-shortcuts -p '/commands/custom/<Shift><Super>s' -t string -s '/usr/bin/flameshot gui' --create
 
     log "+" "Setting SHAPE IBEAM in xfce4-terminal"
-    sudo -u "$user" xfconf-query -c xfce4-terminal -p /misc-cursor-shape -s TERMINAL_CURSOR_SHAPE_IBEAM
+    sudo -u "$user" xfconf-query -c xfce4-terminal -n /misc-cursor-shape -p /misc-cursor-shape -s TERMINAL_CURSOR_SHAPE_IBEAM
 
     log "+" "Setting TRANSPARENCY TO 1.0 in xfce4-terminal"
-    sudo -u "$user" xfconf-query -c xfce4-terminal -p /background-darkness -s 1.0
+    sudo -u "$user" xfconf-query -c xfce4-terminal -n /background-darkness -p /background-darkness -s 1.0
 
     log "+" "Setting default terminal to xfce4-terminal"
     echo "" > "/home/$user/.config/xfce4/helpers.rc"
