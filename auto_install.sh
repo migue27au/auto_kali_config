@@ -1,5 +1,10 @@
 ### AUTO INSTALL KALI PACKAGES ###
 
+# Usar la variable DEBIAN_FRONTEND=noninteractive para evitar preguntas durante la instalación
+log "+" "Setting DEBIAN_FRONTEND noninteractive"
+export DEBIAN_FRONTEND=noninteractive
+export NEEDRESTART_MODE=a
+
 function log {
     symbol=$1
     text=$2
@@ -98,11 +103,6 @@ fi
 log "+" "Update repository"
 apt update
 
-# Usar la variable DEBIAN_FRONTEND=noninteractive para evitar preguntas durante la instalación
-log "+" "Setting DEBIAN_FRONTEND noninteractive"
-export DEBIAN_FRONTEND=noninteractive
-export NEEDRESTART_MODE=a
-
 # INSTALING LINUX ESSENTIAL AND LINUX  HEADERS
 log "+" "Installing build-essential and linux-headers"
 apt install build-essential linux-headers-$(uname -r) -y
@@ -137,7 +137,6 @@ packages=(
     "docker-ce-cli"
     "docker-compose"
     "containerd.io"
-    "mdk4"
     "asleap"
     "isc-dhcp-server"
     "hcxdumptool"
@@ -149,6 +148,7 @@ packages=(
     "bettercap"
     "hostapd"
     "hostapd-wpe"
+    "mdk4"
 )
 
 i=0
