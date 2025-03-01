@@ -276,7 +276,7 @@ for user_configurated in "${users[@]}"; do
 
     log "+" "Configuring xfce4-panel"
     rm -r "/home/$user_configurated/.config/xfce4/panel"
-    unzip "$TEMP_FOLDER/xfce4_panel.zip" "/home/$user_configurated/.config/xfce4/"
+    unzip "$TEMP_FOLDER/xfce4_panel.zip" -d "/home/$user_configurated/.config/xfce4/"
     cp "$TEMP_FOLDER/xfce4-panel.xml" "/home/$user_configurated/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml"
     chown -R "$user_configurated:$user_configurated" "/home/$user_configurated/.config/xfce4/"
     
