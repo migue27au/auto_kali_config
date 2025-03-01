@@ -69,9 +69,15 @@ log "+" "Adding Brave browser repository"
 curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
 echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main" | tee /etc/apt/sources.list.d/brave-browser-release.list
 
+log "+" "Update repository"
+apt update
+
+log "!" "Upgrade all packages"
+apt upgrade
 
 log "+" "Update repository"
 apt update
+
 
 log "+" "Installing build-essential and linux-headers"
 apt install build-essential linux-headers-$(uname -r) -y
