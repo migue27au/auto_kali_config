@@ -238,11 +238,14 @@ for user in "${users[@]}"; do
     sudo -u "$user" pip pyperclip --break-system-packages
 
     log "+" "Downloading my tools"
-    sudo -u "$user" git clone https://github.com/migue27au/toolbar_tools "/home/$user/Documents/tools/toolbar/"
-    sudo -u "$user" git clone https://github.com/migue27au/nmap-info "/home/$user/Documents/tools/"
-    sudo -u "$user" git clone https://github.com/migue27au/ping-sweep "/home/$user/Documents/tools/"
-    sudo -u "$user" git clone https://github.com/migue27au/hostager "/home/$user/Documents/tools/"
+    git clone https://github.com/migue27au/toolbar_tools "/home/$user/Documents/tools/toolbar/"
+    git clone https://github.com/migue27au/nmap-info "/home/$user/Documents/tools/"
+    git clone https://github.com/migue27au/ping-sweep "/home/$user/Documents/tools/"
+    git clone https://github.com/migue27au/hostager "/home/$user/Documents/tools/"
 
+    log "+" "Changing owner of files"
+    chown -R $user:$user  "/home/$user/Documents/
+    
     log "+" "Giving execution permissions"
     chmod +x "/home/$user/Documents/tools/nmap-info/nmap-info.py"
     chmod +x "/home/$user/Documents/tools/ping-swep/ping-sweep.py"
@@ -261,8 +264,8 @@ for user in "${users[@]}"; do
     sudo -u "$user" cp "$TEMP_FOLDER/xfce4-panel.xml" -d "/home/$user/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml"
     sudo -u "$user" xfconf-query -c xfce4-panel -p /plugins/plugin-4/base-directory -s "/home/$user"
 
-    log "+" "Downloading frida & ojection"
-    sudo -u "$user" pip install frida frida-tools ojbection uploadserver --break-system-packages
+    log "+" "Downloading frida & objection"
+    sudo -u "$user" pip install frida frida-tools objection --break-system-packages
 
     log "+" "Downloading uploadserver"
     sudo -u "$user" uploadserver --break-system-packages
