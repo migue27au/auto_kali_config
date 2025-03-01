@@ -262,25 +262,21 @@ for user in "${users[@]}"; do
     log "+" "Creating symbolic links"
     if [ ! -e "/home/$user/.local/bin/nmap-info" ]; then
         sudo -u "$user" ln -s "/home/$user/Documents/tools/nmap-info/nmap-info.py" "/home/$user/.local/bin/nmap-info"
-        sudo -u "$user" chmod +x "/home/$user/.local/bin/nmap-info"
     fi
     if [ ! -e "/home/$user/.local/bin/ping-sweep" ]; then
         sudo -u "$user" ln -s "/home/$user/Documents/tools/ping-sweep/ping-sweep.py" "/home/$user/.local/bin/ping-sweep"
-        sudo -u "$user" chmod +x "/home/$user/.local/bin/ping-sweep"
     fi
     if [ ! -e "/home/$user/.local/bin/hostager" ]; then
         sudo -u "$user" ln -s "/home/$user/Documents/tools/hostager/hostager.py" "/home/$user/.local/bin/hostager"
-        sudo -u "$user" chmod +x "/home/$user/.local/bin/hostager"
     fi
     if [ ! -e "/home/$user/.local/bin/target" ]; then
         sudo -u "$user" ln -s "/home/$user/Documents/tools/toolbar/target.sh" "/home/$user/.local/bin/target"
-        sudo -u "$user" chmod +x "/home/$user/.local/bin/target"
     fi
 
     log "+" "Configuring xfce4-panel"
-    mv "/home/$user/.config/xfce4/panel" "/tmp/$user_xfce4_panel"
-    unzip "$TEMP_FOLDER/xfce4_panel.zip" -d "/home/$user/.config/xfce4/"
-    cp "$TEMP_FOLDER/xfce4-panel.xml" -d "/home/$user/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml"
+    rm -r "/home/$user/.config/xfce4/panel"
+    unzip "$TEMP_FOLDER/xfce4_panel.zip" "/home/$user/.config/xfce4/"
+    cp "$TEMP_FOLDER/xfce4-panel.xml" "/home/$user/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml"
     chown -R $user:$user "/home/$user/.config/xfce4/"
     
     sudo -u "$user" xfconf-query -c xfce4-panel -p /plugins/plugin-4/base-directory -s "/home/$user"
