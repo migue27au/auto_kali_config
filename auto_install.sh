@@ -198,13 +198,6 @@ for user in "${users[@]}"; do
     sudo -u "$user" sh "$TEMP_FOLDER/install-ohmyzsh.sh" --unattended
     sed -i 's/^ZSH_THEME="robbyrussell"/ZSH_THEME="my-custom-theme"/' "/home/$user/.zshrc"
 
-    #Copying ohmyzsh files into users dir
-    log "+" "Copying ohmyzsh files into /home/$user"
-    cp -r /root/.oh-my-zsh "/home/$user/"
-    chown -R $user:$user /root/.oh-my-zsh
-    cp -r /root/.zshrc "/home/$user/"
-    chown -R $user:$user /root/.zshrc    
-    
     log "+" "Copying custom config cherrytree config folder"
     cp "$TEMP_FOLDER/cherrytree_config.cfg" "/home/$user/.config/cherrytree/config.cfg"
     chown -R $user:$user "/home/$user/.config/cherrytree/config.cfg"
