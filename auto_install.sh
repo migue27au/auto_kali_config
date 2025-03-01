@@ -263,3 +263,8 @@ make install
 
 log "!" "Enabling bluetooth service"
 systemctl enable bluetooth
+
+
+
+log "!" "Upgrade all packages"
+apt update && apt upgrade -y
