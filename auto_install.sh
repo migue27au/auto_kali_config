@@ -170,21 +170,21 @@ done
 
 
 log "+" "Downlading xfce4 panel configuration"
-wget -P $TEMP_FOLDER "$AUTO_KALI_CONFIG_REPO/xfce4-panel.xml"
-wget -P $TEMP_FOLDER "$AUTO_KALI_CONFIG_REPO/xfce4-panel.zip"
+wget -N -P $TEMP_FOLDER "$AUTO_KALI_CONFIG_REPO/xfce4-panel.xml"
+wget -N -P $TEMP_FOLDER "$AUTO_KALI_CONFIG_REPO/xfce4-panel.zip"
 
 log "+" "Downloading oh-my-zsh"
-wget -O "$TEMP_FOLDER/install-ohmyzsh.sh" https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
+wget -N -O "$TEMP_FOLDER/install-ohmyzsh.sh" https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
 
 log "+" "Installing ohmyzsh"
 sh "$TEMP_FOLDER/install-ohmyzsh.sh" --unattended
 
 log "+" "Downloading custom oh-my-zsh themes"
-wget -P $TEMP_FOLDER "$AUTO_KALI_CONFIG_REPO/root-theme.zsh-theme"
-wget -P $TEMP_FOLDER "$AUTO_KALI_CONFIG_REPO/user-theme.zsh-theme"
+wget -N -P $TEMP_FOLDER "$AUTO_KALI_CONFIG_REPO/root-theme.zsh-theme"
+wget -N -P $TEMP_FOLDER "$AUTO_KALI_CONFIG_REPO/user-theme.zsh-theme"
 
 log "+"  "Downloading custom cherrytree config"
-wget -P $TEMP_FOLDER $AUTO_KALI_CONFIG_REPO/cherrytree_config.cfg
+wget -N -P $TEMP_FOLDER $AUTO_KALI_CONFIG_REPO/cherrytree_config.cfg
 
 log "+" "Copying root-custom-theme into ohmyzsh custom themes folder"
 cp "$TEMP_FOLDER/root-theme.zsh-theme" "/root/.oh-my-zsh/custom/themes/my-custom-theme.zsh-theme"
@@ -248,7 +248,7 @@ for user in "${users[@]}"; do
     git clone https://github.com/migue27au/hostager "/home/$user/Documents/tools/"
 
     log "+" "Changing owner of files"
-    chown -R $user:$user  "/home/$user/Documents/
+    chown -R $user:$user "/home/$user/Documents/"
     
     log "+" "Giving execution permissions"
     chmod +x "/home/$user/Documents/tools/nmap-info/nmap-info.py"
