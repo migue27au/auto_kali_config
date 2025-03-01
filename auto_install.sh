@@ -97,7 +97,6 @@ packages=(
     "spotify-client"
     "sublime-text"
     "brave-browser"
-    "openvpn-systemd-resolved"
     "flameshot"
     "xfce4-terminal"
     "adb"
@@ -281,6 +280,12 @@ make install
 
 log "!" "Enabling bluetooth service"
 systemctl enable bluetooth
+
+log "+" "Installing openvpn resolve"
+apt install openvpn-systemd-resolved -y
+log "+" "Restarting resolve service"
+systemctl restart systemd-resolved.service
+
 
 log "!" "Upgrade all packages"
 apt update && apt upgrade -y
