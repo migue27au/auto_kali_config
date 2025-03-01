@@ -223,12 +223,14 @@ for user in "${users[@]}"; do
     sudo -u "$user" xfconf-query -c xfce4-terminal -n /background-darkness -t string -p /background-darkness -s 1.0
 
     log "+" "Setting default terminal to xfce4-terminal"
+    update-alternatives --set x-terminal-emulator /usr/bin/xfce4-terminal.wrapper
     echo "" > "/home/$user/.config/xfce4/helpers.rc"
     echo "TerminalEmulator=xfce4-terminal" >> "/home/$user/.config/xfce4/helpers.rc"
-    update-alternatives --set x-terminal-emulator /usr/bin/xfce4-terminal.wrapper
     
     log "+" "Setting default browser to brave-browser"
+    update-alternatives --set x-www-browser /usr/bin/brave-browser
     echo "WebBrowser=brave-browser" >> "/home/$user/.config/xfce4/helpers.rc"
+    
 
     log "+" "Creating tools folder"
     mkdir "/home/$user/Documents/tools"
@@ -298,8 +300,10 @@ log "+" "Copying root-custom-theme into ohmyzsh custom themes folder"
 cp "$TEMP_FOLDER/root-theme.zsh-theme" "/root/.oh-my-zsh/custom/themes/my-custom-theme.zsh-theme"
 sed -i 's/^ZSH_THEME="robbyrussell"/ZSH_THEME="my-custom-theme"/' /root/.zshrc
 
-log "+" "Extracting rockyou"
-gunzip /usr/share/wordlists/rockyou.txt.gz
+if [ -e "/usr/share/wordlists/rockyou.txt.gz" ]; then
+    log "+" "Extracting rockyou"
+    gunzip /usr/share/wordlists/rockyou.txt.gz
+fi
 
 if [ ! -e "/opt/airgeddon" ]; then
     log "+" "Downloading airgeddon project"
@@ -310,6 +314,7 @@ fi
 
 log "!" "Uninstalling modemmanager"
 apt remove modemmanager -y
+
 if [ ! -e "/opt/proxmark3" ]; then
     log "+" "Downloading proxmark3 project"
     git clone https://github.com/RfidResearchGroup/proxmark3 /opt/proxmark3
