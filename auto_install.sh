@@ -188,113 +188,110 @@ wget -N -P $TEMP_FOLDER $AUTO_KALI_CONFIG_REPO/cherrytree_config.cfg
 log "+" "Creating users group"
 groupadd "users"
 
-for user in "${users[@]}"; do
-    log "+" "Configuration of user $user"
+for user_configurated in "${users[@]}"; do
+    log "+" "Configuration of user $user_configurated"
 
-    log "+" "Adding $user to group users"
-    usermod -aG "users" "$user"
+    log "+" "Adding $user_configurated to group users"
+    usermod -aG "users" "$user_configurated"
 
     #Installing oh-my-zsh
     log "+" "Installing ohmyzsh"
-    sudo -u "$user" sh "$TEMP_FOLDER/install-ohmyzsh.sh" --unattended
-    sed -i 's/^ZSH_THEME="robbyrussell"/ZSH_THEME="my-custom-theme"/' "/home/$user/.zshrc"
+    sudo -u "$user_configurated" sh "$TEMP_FOLDER/install-ohmyzsh.sh" --unattended
+    sed -i 's/^ZSH_THEME="robbyrussell"/ZSH_THEME="my-custom-theme"/' "/home/$user_configurated/.zshrc"
 
     log "+" "Copying custom config cherrytree config folder"
-    cp "$TEMP_FOLDER/cherrytree_config.cfg" "/home/$user/.config/cherrytree/config.cfg"
-    chown -R $user:$user "/home/$user/.config/cherrytree/config.cfg"
+    cp "$TEMP_FOLDER/cherrytree_config.cfg" "/home/$user_configurated/.config/cherrytree/config.cfg"
+    chown -R "$user_configurated:$user_configurated" "/home/$user_configurated/.config/cherrytree/config.cfg"
     
     log "+" "Copying user-custom-theme into ohmyzsh custom themes folder"
-    cp "$TEMP_FOLDER/user-theme.zsh-theme" "/home/$user/.oh-my-zsh/custom/themes/my-custom-theme.zsh-theme"
-    chown -R $user:$user "/home/$user/.oh-my-zsh/custom/themes/my-custom-theme.zsh-theme"
+    cp "$TEMP_FOLDER/user-theme.zsh-theme" "/home/$user_configurated/.oh-my-zsh/custom/themes/my-custom-theme.zsh-theme"
+    chown -R "$user_configurated:$user_configurated" "/home/$user_configurated/.oh-my-zsh/custom/themes/my-custom-theme.zsh-theme"
     
     log "+" "Changing keyboard layout to es"
-    sudo -u "$user" setxkbmap es
+    sudo -u "$user_configurated" setxkbmap es
 
     log "+" "Configuring shortcuts ctrl+alt+t for xfce4-terminal"
-    sudo -u "$user" xfconf-query -c xfce4-keyboard-shortcuts -p '/commands/custom/<Primary><Alt>t' -t string -s '/usr/bin/xfce4-terminal'
+    sudo -u "$user_configurated" xfconf-query -c xfce4-keyboard-shortcuts -p '/commands/custom/<Primary><Alt>t' -t string -s '/usr/bin/xfce4-terminal'
 
     log "+" "Configuring shortcuts win+shift+s for flameshot gui"
-    sudo -u "$user" xfconf-query -c xfce4-keyboard-shortcuts -p '/commands/custom/<Shift><Super>s' -t string -s '/usr/bin/flameshot gui' --create
+    sudo -u "$user_configurated" xfconf-query -c xfce4-keyboard-shortcuts -p '/commands/custom/<Shift><Super>s' -t string -s '/usr/bin/flameshot gui' --create
 
     log "+" "Setting SHAPE IBEAM and colors in xfce4-terminal"
-    sudo -u "$user" xfconf-query -c xfce4-terminal -n /misc-cursor-shape -t string -p /misc-cursor-shape -s TERMINAL_CURSOR_SHAPE_IBEAM
-    sudo -u "$user" xfconf-query -c xfce4-terminal -n /color-background -t string -p /color-background -s "#1cbe20b724b1"
-    sudo -u "$user" xfconf-query -c xfce4-terminal -n /background-mode -t string -p /background-mode -s TERMINAL_BACKGROUND_SOLID
-    sudo -u "$user" xfconf-query -c xfce4-terminal -n /background-darkness -t string -p /background-darkness -s 1.0
+    sudo -u "$user_configurated" xfconf-query -c xfce4-terminal -n /misc-cursor-shape -t string -p /misc-cursor-shape -s TERMINAL_CURSOR_SHAPE_IBEAM
+    sudo -u "$user_configurated" xfconf-query -c xfce4-terminal -n /color-background -t string -p /color-background -s "#1cbe20b724b1"
+    sudo -u "$user_configurated" xfconf-query -c xfce4-terminal -n /background-mode -t string -p /background-mode -s TERMINAL_BACKGROUND_SOLID
+    sudo -u "$user_configurated" xfconf-query -c xfce4-terminal -n /background-darkness -t string -p /background-darkness -s 1.0
 
     log "+" "Setting default terminal to xfce4-terminal"
     update-alternatives --set x-terminal-emulator /usr/bin/xfce4-terminal.wrapper
-    echo "" > "/home/$user/.config/xfce4/helpers.rc"
-    echo "TerminalEmulator=xfce4-terminal" >> "/home/$user/.config/xfce4/helpers.rc"
+    echo "" > "/home/$user_configurated/.config/xfce4/helpers.rc"
+    echo "TerminalEmulator=xfce4-terminal" >> "/home/$user_configurated/.config/xfce4/helpers.rc"
     
     log "+" "Setting default browser to brave-browser"
     update-alternatives --set x-www-browser /usr/bin/brave-browser
-    echo "WebBrowser=brave-browser" >> "/home/$user/.config/xfce4/helpers.rc"
-    
+    echo "WebBrowser=brave-browser" >> "/home/$user_configurated/.config/xfce4/helpers.rc"
 
     log "+" "Creating tools folder"
-    mkdir "/home/$user/Documents/tools"
+    mkdir "/home/$user_configurated/Documents/tools"
 
     log "+" "Downloading pyperclip"
-    sudo -u "$user" pip install pyperclip --break-system-packages
+    sudo -u "$user_configurated" pip install pyperclip --break-system-packages
 
     log "+" "Downloading my tools"
-    if [ ! -e "/home/$user/Documents/tools/toolbar/" ]; then
-        git clone https://github.com/migue27au/toolbar_tools "/home/$user/Documents/tools/toolbar/"
+    if [ ! -e "/home/$user_configurated/Documents/tools/toolbar/" ]; then
+        git clone https://github.com/migue27au/toolbar_tools "/home/$user_configurated/Documents/tools/toolbar/"
     fi
-    if [ ! -e "/home/$user/Documents/tools/nmap-info" ]; then
-        git clone https://github.com/migue27au/nmap-info "/home/$user/Documents/tools/nmap-info"
+    if [ ! -e "/home/$user_configurated/Documents/tools/nmap-info" ]; then
+        git clone https://github.com/migue27au/nmap-info "/home/$user_configurated/Documents/tools/nmap-info"
     fi
-    if [ ! -e "/home/$user/Documents/tools/ping-sweep" ]; then
-        git clone https://github.com/migue27au/ping-sweep "/home/$user/Documents/tools/ping-sweep"
+    if [ ! -e "/home/$user_configurated/Documents/tools/ping-sweep" ]; then
+        git clone https://github.com/migue27au/ping-sweep "/home/$user_configurated/Documents/tools/ping-sweep"
     fi
-    if [ ! -e "/home/$user/Documents/tools/hostager" ]; then
-        git clone https://github.com/migue27au/hostager "/home/$user/Documents/tools/hostager"
+    if [ ! -e "/home/$user_configurated/Documents/tools/hostager" ]; then
+        git clone https://github.com/migue27au/hostager "/home/$user_configurated/Documents/tools/hostager"
     fi
 
     log "+" "Changing owner of files"
-    chown -R $user:$user "/home/$user/Documents/"
+    chown -R "$user_configurated:$user_configurated" "/home/$user_configurated/Documents/"
     
     log "+" "Giving execution permissions"
-    sudo -u "$user" chmod +x "/home/$user/Documents/tools/nmap-info/nmap-info.py"
-    sudo -u "$user" chmod +x "/home/$user/Documents/tools/ping-sweep/ping-sweep.py"
-    sudo -u "$user" chmod +x "/home/$user/Documents/tools/hostager/hostager.py" 
-    sudo -u "$user" chmod +x "/home/$user/Documents/tools/toolbar/target.sh" 
+    sudo -u "$user_configurated" chmod +x "/home/$user_configurated/Documents/tools/nmap-info/nmap-info.py"
+    sudo -u "$user_configurated" chmod +x "/home/$user_configurated/Documents/tools/ping-sweep/ping-sweep.py"
+    sudo -u "$user_configurated" chmod +x "/home/$user_configurated/Documents/tools/hostager/hostager.py" 
+    sudo -u "$user_configurated" chmod +x "/home/$user_configurated/Documents/tools/toolbar/target.sh" 
 
     log "+" "Creating symbolic links"
-    if [ ! -e "/home/$user/.local/bin/nmap-info" ]; then
-        sudo -u "$user" ln -s "/home/$user/Documents/tools/nmap-info/nmap-info.py" "/home/$user/.local/bin/nmap-info"
+    if [ ! -e "/home/$user_configurated/.local/bin/nmap-info" ]; then
+        sudo -u "$user_configurated" ln -s "/home/$user_configurated/Documents/tools/nmap-info/nmap-info.py" "/home/$user_configurated/.local/bin/nmap-info"
     fi
-    if [ ! -e "/home/$user/.local/bin/ping-sweep" ]; then
-        sudo -u "$user" ln -s "/home/$user/Documents/tools/ping-sweep/ping-sweep.py" "/home/$user/.local/bin/ping-sweep"
+    if [ ! -e "/home/$user_configurated/.local/bin/ping-sweep" ]; then
+        sudo -u "$user_configurated" ln -s "/home/$user_configurated/Documents/tools/ping-sweep/ping-sweep.py" "/home/$user_configurated/.local/bin/ping-sweep"
     fi
-    if [ ! -e "/home/$user/.local/bin/hostager" ]; then
-        sudo -u "$user" ln -s "/home/$user/Documents/tools/hostager/hostager.py" "/home/$user/.local/bin/hostager"
+    if [ ! -e "/home/$user_configurated/.local/bin/hostager" ]; then
+        sudo -u "$user_configurated" ln -s "/home/$user_configurated/Documents/tools/hostager/hostager.py" "/home/$user_configurated/.local/bin/hostager"
     fi
-    if [ ! -e "/home/$user/.local/bin/target" ]; then
-        sudo -u "$user" ln -s "/home/$user/Documents/tools/toolbar/target.sh" "/home/$user/.local/bin/target"
+    if [ ! -e "/home/$user_configurated/.local/bin/target" ]; then
+        sudo -u "$user_configurated" ln -s "/home/$user_configurated/Documents/tools/toolbar/target.sh" "/home/$user_configurated/.local/bin/target"
     fi
 
     log "+" "Configuring xfce4-panel"
-    rm -r "/home/$user/.config/xfce4/panel"
-    unzip "$TEMP_FOLDER/xfce4_panel.zip" "/home/$user/.config/xfce4/"
-    cp "$TEMP_FOLDER/xfce4-panel.xml" "/home/$user/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml"
-    chown -R $user:$user "/home/$user/.config/xfce4/"
+    rm -r "/home/$user_configurated/.config/xfce4/panel"
+    unzip "$TEMP_FOLDER/xfce4_panel.zip" "/home/$user_configurated/.config/xfce4/"
+    cp "$TEMP_FOLDER/xfce4-panel.xml" "/home/$user_configurated/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml"
+    chown -R "$user_configurated:$user_configurated" "/home/$user_configurated/.config/xfce4/"
     
-    sudo -u "$user" xfconf-query -c xfce4-panel -p /plugins/plugin-4/base-directory -s "/home/$user"
+    sudo -u "$user_configurated" xfconf-query -c xfce4-panel -p /plugins/plugin-4/base-directory -s "/home/$user_configurated"
 
     log "+" "Downloading frida & objection"
-    sudo -u "$user" pip install frida frida-tools objection --break-system-packages
+    sudo -u "$user_configurated" pip install frida frida-tools objection --break-system-packages
 
     log "+" "Downloading uploadserver"
-    sudo -u "$user" pip install uploadserver --break-system-packages
-
-
+    sudo -u "$user_configurated" pip install uploadserver --break-system-packages
 done
 
 log "+" "Installing ohmyzsh in root"
-cp -r "/home/$user/.oh-my-zsh" /root/
-cp "/home/$user/.zshrc" /root/
+cp -r "/home/$user_configurated/.oh-my-zsh" /root/
+cp "/home/$user_configurated/.zshrc" /root/
 
 log "+" "Copying root-custom-theme into ohmyzsh custom themes folder"
 cp "$TEMP_FOLDER/root-theme.zsh-theme" "/root/.oh-my-zsh/custom/themes/my-custom-theme.zsh-theme"
