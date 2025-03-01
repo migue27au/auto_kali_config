@@ -247,7 +247,7 @@ for user in "${users[@]}"; do
     
     log "+" "Giving execution permissions"
     chmod +x "/home/$user/Documents/tools/nmap-info/nmap-info.py"
-    chmod +x "/home/$user/Documents/tools/ping-swep/ping-sweep.py"
+    chmod +x "/home/$user/Documents/tools/ping-sweep/ping-sweep.py"
     chmod +x "/home/$user/Documents/tools/hostager/hostager.py" 
     chmod +x "/home/$user/Documents/tools/toolbar/target.sh" 
 
