@@ -214,7 +214,7 @@ for user in "${users[@]}"; do
     chown -R $user:$user "/home/$user/.oh-my-zsh/custom/themes/my-custom-theme.zsh-theme"
     
     log "+" "Changing keyboard layout to es"
-    setxkbmap es
+    sudo -u "$user" setxkbmap es
 
     log "+" "Configuring shortcuts ctrl+alt+t for xfce4-terminal"
     sudo -u "$user" xfconf-query -c xfce4-keyboard-shortcuts -p '/commands/custom/<Primary><Alt>t' -t string -s '/usr/bin/xfce4-terminal'
