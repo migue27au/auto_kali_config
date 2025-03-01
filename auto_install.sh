@@ -201,14 +201,18 @@ for user in "${users[@]}"; do
     #Copying ohmyzsh files into users dir
     log "+" "Copying ZSH files into /home/$user"
     cp -r /root/.oh-my-zsh "/home/$user/"
+    chown -R $user:$user /root/.oh-my-zsh
     cp -r /root/.zshrc "/home/$user/"
+    chown -R $user:$user /root/.zshrc    
     
     log "+" "Copying custom config cherrytree config folder"
     cp "$TEMP_FOLDER/cherrytree_config.cfg" "/home/$user/.config/cherrytree/config.cfg"
-
+    chown -R $user:$user "/home/$user/.config/cherrytree/config.cfg"
+    
     log "+" "Copying user-custom-theme into ohmyzsh custom themes folder"
-    mv "$TEMP_FOLDER/user-theme.zsh-theme" "/home/$user/.oh-my-zsh/custom/themes/my-custom-theme.zsh-theme"
-
+    cp "$TEMP_FOLDER/user-theme.zsh-theme" "/home/$user/.oh-my-zsh/custom/themes/my-custom-theme.zsh-theme"
+    chown -R $user:$user "/home/$user/.oh-my-zsh/custom/themes/my-custom-theme.zsh-theme"
+    
     log "+" "Changing keyboard layout to es"
     setxkbmap es
 
@@ -253,10 +257,10 @@ for user in "${users[@]}"; do
     chmod +x "/home/$user/Documents/tools/toolbar/target.sh" 
 
     log "+" "Creating symbolic links"
-    ln -s "/home/$user/Documents/tools/nmap-info/nmap-info.py" "/home/$user/.local/bin/nmap-info"
-    ln -s "/home/$user/Documents/tools/ping-swep/ping-sweep.py" "/home/$user/.local/bin/ping-sweep"
-    ln -s "/home/$user/Documents/tools/hostager/hostager.py" "/home/$user/.local/bin/hostager"
-    ln -s "/home/$user/Documents/tools/toolbar/target.sh" "/home/$user/.local/bin/target"
+    sudo -u "$user" ln -s "/home/$user/Documents/tools/nmap-info/nmap-info.py" "/home/$user/.local/bin/nmap-info"
+    sudo -u "$user" ln -s "/home/$user/Documents/tools/ping-swep/ping-sweep.py" "/home/$user/.local/bin/ping-sweep"
+    sudo -u "$user" ln -s "/home/$user/Documents/tools/hostager/hostager.py" "/home/$user/.local/bin/hostager"
+    sudo -u "$user" ln -s "/home/$user/Documents/tools/toolbar/target.sh" "/home/$user/.local/bin/target"
 
     log "+" "Configuring xfce4-panel"
     mv "/home/$user/.config/xfce4/panel" "/tmp/$user_xfce4_panel"
