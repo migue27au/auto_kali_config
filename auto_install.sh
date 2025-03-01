@@ -253,7 +253,7 @@ for user in "${users[@]}"; do
 
     log "+" "Creating symbolic links"
     sudo -u "$user" ln -s "/home/$user/Documents/tools/nmap-info/nmap-info.py" "/home/$user/.local/bin/nmap-info"
-    sudo -u "$user" ln -s "/home/$user/Documents/tools/ping-swep/ping-sweep.py" "/home/$user/.local/bin/ping-sweep"
+    sudo -u "$user" ln -s "/home/$user/Documents/tools/ping-sweep/ping-sweep.py" "/home/$user/.local/bin/ping-sweep"
     sudo -u "$user" ln -s "/home/$user/Documents/tools/hostager/hostager.py" "/home/$user/.local/bin/hostager"
     sudo -u "$user" ln -s "/home/$user/Documents/tools/toolbar/target.sh" "/home/$user/.local/bin/target"
 
