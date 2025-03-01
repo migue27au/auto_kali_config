@@ -72,13 +72,6 @@ echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] http
 log "+" "Update repository"
 apt update
 
-log "!" "Upgrade all packages"
-apt upgrade
-
-log "+" "Update repository"
-apt update
-
-
 log "+" "Installing build-essential and linux-headers"
 apt install build-essential linux-headers-$(uname -r) -y
 
