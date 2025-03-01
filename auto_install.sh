@@ -282,6 +282,7 @@ done
 
 log "+" "Installing ohmyzsh in root"
 cp -r "/home/$user/.oh-my-zsh" /root/
+cp "/home/$user/.zshrc" /root/
 
 log "+" "Copying root-custom-theme into ohmyzsh custom themes folder"
 cp "$TEMP_FOLDER/root-theme.zsh-theme" "/root/.oh-my-zsh/custom/themes/my-custom-theme.zsh-theme"
