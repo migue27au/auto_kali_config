@@ -84,6 +84,16 @@ else
     log "+" "Brave browser repository already added."
 fi
 
+# ADDING DOCKER DEBIAN REPOSITORY
+if ! grep -q "download.docker.com" /etc/apt/sources.list.d/docker.list; then
+    log "+" "Adding Docker repository"
+    curl -fsSL https://download.docker.com/linux/debian/gpg |gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+    echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian bookworm stable" | tee /etc/apt/sources.list.d/docker.list
+    
+else
+    log "+" "Brave browser repository already added."
+fi
+
 
 log "+" "Update repository"
 apt update
@@ -122,19 +132,18 @@ packages=(
     "docker-ce-cli"
     "docker-compose"
     "containerd.io"
-    "bettercap"
-    "hostapd"
     "mdk4"
     "asleap"
     "isc-dhcp-server"
-    "hostapd-wpe"
     "hcxdumptool"
     "hcxtools"
     "beef-xss"
     "lighttpd"
-    "openvpn-systemd-resolved"
     "libreoffice"
     "seclists"
+    "bettercap"
+    "hostapd"
+    "hostapd-wpe"
 )
 
 i=0
