@@ -240,7 +240,7 @@ for user in "${users[@]}"; do
     mkdir "/home/$user/Documents/tools"
 
     log "+" "Downloading pyperclip"
-    sudo -u "$user" pip pyperclip --break-system-packages
+    sudo -u "$user" pip install pyperclip --break-system-packages
 
     log "+" "Downloading my tools"
     git clone https://github.com/migue27au/toolbar_tools "/home/$user/Documents/tools/toolbar/"
@@ -275,7 +275,7 @@ for user in "${users[@]}"; do
     sudo -u "$user" pip install frida frida-tools objection --break-system-packages
 
     log "+" "Downloading uploadserver"
-    sudo -u "$user" uploadserver --break-system-packages
+    sudo -u "$user" pip install uploadserver --break-system-packages
 
 
 done
