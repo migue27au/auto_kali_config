@@ -237,25 +237,45 @@ for user in "${users[@]}"; do
     sudo -u "$user" pip install pyperclip --break-system-packages
 
     log "+" "Downloading my tools"
-    git clone https://github.com/migue27au/toolbar_tools "/home/$user/Documents/tools/toolbar/"
-    git clone https://github.com/migue27au/nmap-info "/home/$user/Documents/tools/nmap-info"
-    git clone https://github.com/migue27au/ping-sweep "/home/$user/Documents/tools/ping-sweep"
-    git clone https://github.com/migue27au/hostager "/home/$user/Documents/tools/hostager"
+    if [ ! -e "/home/$user/Documents/tools/toolbar/" ]; then
+        git clone https://github.com/migue27au/toolbar_tools "/home/$user/Documents/tools/toolbar/"
+    fi
+    if [ ! -e "/home/$user/Documents/tools/nmap-info" ]; then
+        git clone https://github.com/migue27au/nmap-info "/home/$user/Documents/tools/nmap-info"
+    fi
+    if [ ! -e "/home/$user/Documents/tools/ping-sweep" ]; then
+        git clone https://github.com/migue27au/ping-sweep "/home/$user/Documents/tools/ping-sweep"
+    fi
+    if [ ! -e "/home/$user/Documents/tools/hostager" ]; then
+        git clone https://github.com/migue27au/hostager "/home/$user/Documents/tools/hostager"
+    fi
 
     log "+" "Changing owner of files"
     chown -R $user:$user "/home/$user/Documents/"
     
     log "+" "Giving execution permissions"
-    chmod +x "/home/$user/Documents/tools/nmap-info/nmap-info.py"
-    chmod +x "/home/$user/Documents/tools/ping-sweep/ping-sweep.py"
-    chmod +x "/home/$user/Documents/tools/hostager/hostager.py" 
-    chmod +x "/home/$user/Documents/tools/toolbar/target.sh" 
+    sudo -u "$user" chmod +x "/home/$user/Documents/tools/nmap-info/nmap-info.py"
+    sudo -u "$user" chmod +x "/home/$user/Documents/tools/ping-sweep/ping-sweep.py"
+    sudo -u "$user" chmod +x "/home/$user/Documents/tools/hostager/hostager.py" 
+    sudo -u "$user" chmod +x "/home/$user/Documents/tools/toolbar/target.sh" 
 
     log "+" "Creating symbolic links"
-    sudo -u "$user" ln -s "/home/$user/Documents/tools/nmap-info/nmap-info.py" "/home/$user/.local/bin/nmap-info"
-    sudo -u "$user" ln -s "/home/$user/Documents/tools/ping-sweep/ping-sweep.py" "/home/$user/.local/bin/ping-sweep"
-    sudo -u "$user" ln -s "/home/$user/Documents/tools/hostager/hostager.py" "/home/$user/.local/bin/hostager"
-    sudo -u "$user" ln -s "/home/$user/Documents/tools/toolbar/target.sh" "/home/$user/.local/bin/target"
+    if [ ! -e "/home/$user/.local/bin/nmap-info" ]; then
+        sudo -u "$user" ln -s "/home/$user/Documents/tools/nmap-info/nmap-info.py" "/home/$user/.local/bin/nmap-info"
+        sudo -u "$user" chmod +x "/home/$user/.local/bin/nmap-info"
+    fi
+    if [ ! -e "/home/$user/.local/bin/ping-sweep" ]; then
+        sudo -u "$user" ln -s "/home/$user/Documents/tools/ping-sweep/ping-sweep.py" "/home/$user/.local/bin/ping-sweep"
+        sudo -u "$user" chmod +x "/home/$user/.local/bin/ping-sweep"
+    fi
+    if [ ! -e "/home/$user/.local/bin/hostager" ]; then
+        sudo -u "$user" ln -s "/home/$user/Documents/tools/hostager/hostager.py" "/home/$user/.local/bin/hostager"
+        sudo -u "$user" chmod +x "/home/$user/.local/bin/hostager"
+    fi
+    if [ ! -e "/home/$user/.local/bin/target" ]; then
+        sudo -u "$user" ln -s "/home/$user/Documents/tools/toolbar/target.sh" "/home/$user/.local/bin/target"
+        sudo -u "$user" chmod +x "/home/$user/.local/bin/target"
+    fi
 
     log "+" "Configuring xfce4-panel"
     mv "/home/$user/.config/xfce4/panel" "/tmp/$user_xfce4_panel"
@@ -285,24 +305,27 @@ sed -i 's/^ZSH_THEME="robbyrussell"/ZSH_THEME="my-custom-theme"/' /root/.zshrc
 log "+" "Extracting rockyou"
 gunzip /usr/share/wordlists/rockyou.txt.gz
 
-log "+" "Downloading airgeddon project"
-git clone https://github.com/v1s1t0r1sh3r3/airgeddon /opt/airgeddon
-chown -R root:users /opt/airgeddon
-chmod -R 770 /opt/airgeddon
-
-log "+" "Downloading proxmark3 project"
-git clone https://github.com/RfidResearchGroup/proxmark3 /opt/proxmark3
-chown -R root:users /opt/proxmark3
-chmod -R 770 /opt/proxmark3
+if [ ! -e "/opt/airgeddon" ]; then
+    log "+" "Downloading airgeddon project"
+    git clone https://github.com/v1s1t0r1sh3r3/airgeddon /opt/airgeddon
+    chown -R root:users /opt/airgeddon
+    chmod -R 770 /opt/airgeddon
+fi
 
 log "!" "Uninstalling modemmanager"
 apt remove modemmanager -y
-
-log "+" "Installing proxmark3 project"
-cd /opt/proxmark3
-make accessrights
-make clean && make -j
-make install
+if [ ! -e "/opt/proxmark3" ]; then
+    log "+" "Downloading proxmark3 project"
+    git clone https://github.com/RfidResearchGroup/proxmark3 /opt/proxmark3
+    chown -R root:users /opt/proxmark3
+    chmod -R 770 /opt/proxmark3
+    
+    log "+" "Installing proxmark3 project"
+    cd /opt/proxmark3
+    make accessrights
+    make clean && make -j
+    make install
+fi
 
 log "!" "Enabling bluetooth service"
 systemctl enable bluetooth
