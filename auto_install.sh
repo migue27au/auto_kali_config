@@ -264,6 +264,7 @@ make install
 log "!" "Enabling bluetooth service"
 systemctl enable bluetooth
 
+log "!" "Reboot your system now"
 
 
 log "!" "Upgrade all packages"
