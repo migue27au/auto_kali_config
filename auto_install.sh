@@ -217,10 +217,10 @@ for user in "${users[@]}"; do
     sudo -u "$user" xfconf-query -c xfce4-keyboard-shortcuts -p '/commands/custom/<Shift><Super>s' -t string -s '/usr/bin/flameshot gui' --create
 
     log "+" "Setting SHAPE IBEAM in xfce4-terminal"
-    sudo -u "$user" xfconf-query -c xfce4-terminal -n /misc-cursor-shape -p /misc-cursor-shape -s TERMINAL_CURSOR_SHAPE_IBEAM
+    sudo -u "$user" xfconf-query -c xfce4-terminal -n /misc-cursor-shape -t string -p /misc-cursor-shape -s TERMINAL_CURSOR_SHAPE_IBEAM
 
     log "+" "Setting TRANSPARENCY TO 1.0 in xfce4-terminal"
-    sudo -u "$user" xfconf-query -c xfce4-terminal -n /background-darkness -p /background-darkness -s 1.0
+    sudo -u "$user" xfconf-query -c xfce4-terminal -p /background-darkness -s 1.0
 
     log "+" "Setting default terminal to xfce4-terminal"
     echo "" > "/home/$user/.config/xfce4/helpers.rc"
@@ -238,9 +238,9 @@ for user in "${users[@]}"; do
 
     log "+" "Downloading my tools"
     git clone https://github.com/migue27au/toolbar_tools "/home/$user/Documents/tools/toolbar/"
-    git clone https://github.com/migue27au/nmap-info "/home/$user/Documents/tools/"
-    git clone https://github.com/migue27au/ping-sweep "/home/$user/Documents/tools/"
-    git clone https://github.com/migue27au/hostager "/home/$user/Documents/tools/"
+    git clone https://github.com/migue27au/nmap-info "/home/$user/Documents/tools/nmap-info"
+    git clone https://github.com/migue27au/ping-sweep "/home/$user/Documents/tools/ping-sweep"
+    git clone https://github.com/migue27au/hostager "/home/$user/Documents/tools/hostager"
 
     log "+" "Changing owner of files"
     chown -R $user:$user "/home/$user/Documents/"
@@ -259,7 +259,7 @@ for user in "${users[@]}"; do
 
     log "+" "Configuring xfce4-panel"
     mv "/home/$user/.config/xfce4/panel" "/tmp/$user_xfce4_panel"
-    unzip "$TEMP_FOLDER/xfce4-panel.zip" -d "/home/$user/.config/xfce4/"
+    unzip "$TEMP_FOLDER/xfce4_panel.zip" -d "/home/$user/.config/xfce4/"
     cp "$TEMP_FOLDER/xfce4-panel.xml" -d "/home/$user/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml"
     chown -R $user:$user "/home/$user/.config/xfce4/"
     
