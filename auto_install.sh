@@ -258,7 +258,7 @@ for user_configurated in "${users[@]}"; do
     sudo -u "$user_configurated" chmod +x "/home/$user_configurated/Documents/tools/nmap-info/nmap-info.py"
     sudo -u "$user_configurated" chmod +x "/home/$user_configurated/Documents/tools/ping-sweep/ping-sweep.py"
     sudo -u "$user_configurated" chmod +x "/home/$user_configurated/Documents/tools/hostager/hostager.py" 
-    sudo -u "$user_configurated" chmod +x "/home/$user_configurated/Documents/tools/toolbar/target.sh" 
+    sudo -u "$user_configurated" chmod +x "/home/$user_configurated/Documents/tools/toolbar/*" 
 
     log "+" "Creating symbolic links"
     if [ ! -e "/home/$user_configurated/.local/bin/nmap-info" ]; then
