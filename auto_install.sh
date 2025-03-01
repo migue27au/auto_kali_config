@@ -44,7 +44,7 @@ fi
 
 AUTO_KALI_CONFIG_REPO="https://raw.githubusercontent.com/migue27au/auto_kali_config/main/"
 
-TEMP_FOLDER="/tmp/auto_kali_configuration/"
+TEMP_FOLDER="/tmp/auto_kali_configuration"
 log "!" "Creating temporal folder: $TEMP_FOLDER"
 mkdir -p $TEMP_FOLDER
 
@@ -171,7 +171,8 @@ done
 
 log "+" "Downlading xfce4 panel configuration"
 wget -N -P $TEMP_FOLDER "$AUTO_KALI_CONFIG_REPO/xfce4-panel.xml"
-wget -N -P $TEMP_FOLDER "$AUTO_KALI_CONFIG_REPO/xfce4-panel.zip"
+wget -N -P $TEMP_FOLDER "https://github.com/migue27au/auto_kali_config/raw/main/xfce4_panel.zip"
+
 
 log "+" "Downloading oh-my-zsh"
 wget -N -O "$TEMP_FOLDER/install-ohmyzsh.sh" https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
@@ -193,13 +194,13 @@ log "+" "Creating users group"
 groupadd "users"
 
 for user in "${users[@]}"; do
-    log "+" "Configurin user $user"
+    log "+" "Configuration of user $user"
 
-    log "+" "Adding $user to users group"
+    log "+" "Adding $user to group users"
     usermod -aG "users" "$user"
 
     #Copying ohmyzsh files into users dir
-    log "+" "Copying ZSH files into /home/$user"
+    log "+" "Copying ohmyzsh files into /home/$user"
     cp -r /root/.oh-my-zsh "/home/$user/"
     chown -R $user:$user /root/.oh-my-zsh
     cp -r /root/.zshrc "/home/$user/"
