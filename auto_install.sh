@@ -42,7 +42,7 @@ if [[ $whoami != "root" ]]; then
 fi
 
 
-AUTO_KALI_CONFIG_REPO="https://raw.githubusercontent.com/migue27au/auto_kali_config/main/"
+AUTO_KALI_CONFIG_REPO="https://raw.githubusercontent.com/migue27au/auto_kali_config/main"
 
 TEMP_FOLDER="/tmp/auto_kali_configuration"
 log "!" "Creating temporal folder: $TEMP_FOLDER"
