@@ -168,6 +168,7 @@ while [ $i -lt ${#packages[@]} ]; do
     ((i++))
 done
 
+setxkbmap es
 
 log "+" "Downlading xfce4 panel configuration"
 wget -N -P $TEMP_FOLDER "$AUTO_KALI_CONFIG_REPO/xfce4-panel.xml"
