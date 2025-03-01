@@ -73,7 +73,7 @@ log "+" "Update repository"
 apt update
 
 log "!" "Upgrade all packages"
-apt upgrade
+apt upgrade -y
 
 log "+" "Update repository"
 apt update
