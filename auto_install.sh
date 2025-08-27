@@ -149,6 +149,7 @@ packages=(
     "hostapd"
     "hostapd-wpe"
     "mdk4"
+    "chisel"
 )
 
 i=0
