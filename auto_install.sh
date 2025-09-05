@@ -150,6 +150,7 @@ packages=(
     "hostapd-wpe"
     "mdk4"
     "chisel"
+    "feroxbuster"
 )
 
 i=0
