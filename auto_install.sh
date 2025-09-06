@@ -151,6 +151,7 @@ packages=(
     "mdk4"
     "chisel"
     "feroxbuster"
+    "filezilla"
 )
 
 i=0
