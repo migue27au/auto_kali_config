@@ -188,6 +188,9 @@ wget -N -P $TEMP_FOLDER "$AUTO_KALI_CONFIG_REPO/user-theme.zsh-theme"
 log "+"  "Downloading custom cherrytree config"
 wget -N -P $TEMP_FOLDER $AUTO_KALI_CONFIG_REPO/cherrytree_config.cfg
 
+log "+" "Downloading wallpaper"
+wget -N -P /home/$user_configurated/Pictures/ $AUTO_KALI_CONFIG_REPO/background.png
+
 log "+" "Creating users group"
 groupadd "users"
 
