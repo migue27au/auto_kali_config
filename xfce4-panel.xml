@@ -31,7 +31,6 @@
         <value type="int" value="24"/>
         <value type="int" value="26"/>
         <value type="int" value="25"/>
-        <value type="int" value="33"/>
         <value type="int" value="14"/>
         <value type="int" value="16"/>
         <value type="int" value="17"/>
@@ -46,15 +45,14 @@
   <property name="plugins" type="empty">
     <property name="plugin-1" type="string" value="whiskermenu">
       <property name="recent" type="array">
+        <value type="string" value="xfce-keyboard-settings.desktop"/>
         <value type="string" value="xfce4-mime-settings.desktop"/>
         <value type="string" value="keepass2.desktop"/>
         <value type="string" value="blueman-manager.desktop"/>
         <value type="string" value="org.wireshark.Wireshark.desktop"/>
-        <value type="string" value="install4j_hznb23-BurpSuitePro.desktop"/>
         <value type="string" value="spotify.desktop"/>
         <value type="string" value="xfce4-screensaver-preferences.desktop"/>
         <value type="string" value="xfce-backdrop-settings.desktop"/>
-        <value type="string" value="vmware-workstation.desktop"/>
         <value type="string" value="xfce4-terminal.desktop"/>
       </property>
     </property>
@@ -62,7 +60,7 @@
     <property name="plugin-3" type="string" value="showdesktop"/>
     <property name="plugin-4" type="string" value="directorymenu">
       <property name="icon-name" type="string" value="system-file-manager"/>
-      <property name="base-directory" type="string" value="/home/user"/>
+      <property name="base-directory" type="string" value="/home/kali"/>
     </property>
     <property name="plugin-8" type="string" value="separator"/>
     <property name="plugin-9" type="string" value="pager">
@@ -248,11 +246,45 @@
     <property name="plugin-23" type="string" value="separator"/>
     <property name="plugin-24" type="string" value="separator"/>
     <property name="plugin-25" type="string" value="separator"/>
-    <property name="plugin-26" type="string" value="genmon"/>
-    <property name="plugin-27" type="string" value="genmon"/>
-    <property name="plugin-28" type="string" value="genmon"/>
-    <property name="plugin-29" type="string" value="genmon"/>
-    <property name="plugin-30" type="string" value="genmon"/>
-    <property name="plugin-33" type="string" value="genmon"/>
+    <property name="plugin-26" type="string" value="genmon">
+      <property name="command" type="string" value="/home/kali/Documents/tools/toolbar/getPublicIP.sh"/>
+      <property name="use-label" type="bool" value="false"/>
+      <property name="text" type="string" value="(genmon)"/>
+      <property name="update-period" type="int" value="3000"/>
+      <property name="enable-single-row" type="bool" value="true"/>
+      <property name="font" type="string" value="Cantarell 10"/>
+    </property>
+    <property name="plugin-27" type="string" value="genmon">
+      <property name="command" type="string" value="/home/kali/Documents/tools/toolbar/getIP.sh eth"/>
+      <property name="use-label" type="bool" value="false"/>
+      <property name="text" type="string" value="(genmon)"/>
+      <property name="update-period" type="int" value="3000"/>
+      <property name="enable-single-row" type="bool" value="true"/>
+      <property name="font" type="string" value="Cantarell 10"/>
+    </property>
+    <property name="plugin-28" type="string" value="genmon">
+      <property name="command" type="string" value="/home/kali/Documents/tools/toolbar/getIP.sh tun"/>
+      <property name="use-label" type="bool" value="false"/>
+      <property name="text" type="string" value="(genmon)"/>
+      <property name="update-period" type="int" value="3000"/>
+      <property name="enable-single-row" type="bool" value="true"/>
+      <property name="font" type="string" value="Cantarell 10"/>
+    </property>
+    <property name="plugin-29" type="string" value="genmon">
+      <property name="command" type="string" value="/home/kali/Documents/tools/toolbar/getIP.sh wlan"/>
+      <property name="use-label" type="bool" value="false"/>
+      <property name="text" type="string" value="(genmon)"/>
+      <property name="update-period" type="int" value="3000"/>
+      <property name="enable-single-row" type="bool" value="true"/>
+      <property name="font" type="string" value="Cantarell 10"/>
+    </property>
+    <property name="plugin-30" type="string" value="genmon">
+      <property name="command" type="string" value="/home/kali/Documents/tools/toolbar/target.sh get"/>
+      <property name="use-label" type="bool" value="false"/>
+      <property name="text" type="string" value="(genmon)"/>
+      <property name="update-period" type="int" value="3000"/>
+      <property name="enable-single-row" type="bool" value="true"/>
+      <property name="font" type="string" value="Cantarell 10"/>
+    </property>
   </property>
 </channel>
