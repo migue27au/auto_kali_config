@@ -152,6 +152,7 @@ packages=(
     "chisel"
     "feroxbuster"
     "filezilla"
+    "openvpn-systemd-resolved"
 )
 
 i=0
